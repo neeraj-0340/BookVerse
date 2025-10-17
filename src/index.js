@@ -18,6 +18,7 @@ root.render(
     <Provider store={Store}>
     <BrowserRouter>
     <Routes>
+      <Route path="/" element={<Library/>}></Route>
       <Route path="/Library" element={<Library/>}></Route>
       <Route path="/Favourites" element={<Favourites/>}></Route>
       <Route path="/mylibrary" element={<Mylibrary/>}></Route>
