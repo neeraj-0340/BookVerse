@@ -17,8 +17,12 @@ export const Detailedpage = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/playlists/${id}`);
-        setBook(response.data);
+        const response = await axios.get("/db.json");
+        const foundBook = response.data.playlists.find(
+          (item) => item.id === parseInt(id)
+        );
+        setBook(foundBook);
+
         setLoading(false);
         setError(false);
       } catch (error) {
@@ -31,7 +35,9 @@ export const Detailedpage = () => {
   }, [id]);
 
   if (loading) {
-    return <div className="text-center mt-20 text-xl font-semibold">Loading...</div>;
+    return (
+      <div className="text-center mt-20 text-xl font-semibold">Loading...</div>
+    );
   }
 
   if (error || !book) {
@@ -64,9 +70,16 @@ export const Detailedpage = () => {
         />
         <div className="flex-1">
           <h1 className="text-2xl font-bold mb-4">{book.title}</h1>
-          <p className="mb-2 text-lg">Author: <span className="font-semibold">{book.author}</span></p>
-          <p className="mb-2 text-lg">Genre: <span className="font-semibold">{book.genre}</span></p>
-          <p className="mb-4 text-lg">Published: <span className="font-semibold">{book.year_published}</span></p>
+          <p className="mb-2 text-lg">
+            Author: <span className="font-semibold">{book.author}</span>
+          </p>
+          <p className="mb-2 text-lg">
+            Genre: <span className="font-semibold">{book.genre}</span>
+          </p>
+          <p className="mb-4 text-lg">
+            Published:{" "}
+            <span className="font-semibold">{book.year_published}</span>
+          </p>
           <div className="flex gap-4">
             <button
               onClick={() => dispatch(favourite(book))}
